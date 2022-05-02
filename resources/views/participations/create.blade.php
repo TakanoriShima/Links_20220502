@@ -25,18 +25,18 @@
   </div>
   <div class="pobutton">
     <div class="sanka">
-      <form action="/participations" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="_token" value="{{ csrf_token() }}">  
-      <input type="hidden" name="status" value="1">
-      <input type="submit" value="参加申請" style="background-color:#4169e1;font-size:15px;width:180px;height:60px;" >
+      <form action="/participations" method="POST">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">  
+        <input type="hidden" name="community_id" value="{{ $community->id }}">
+        <input type="submit" value="参加申請" style="background-color:#4169e1;font-size:15px;width:180px;height:60px;" >
       </div>
     </form>  
-    <form action="/participations" method="POST" enctype="multipart/form-data">
-    <div class="exit">
-      <input type="hidden" name="status" value="2">
-      <input type="submit" value="退会" style="background-color:red;font-size:15px;width:180px;height:60px;" >
-      </div>
-      </form>
+    <!--<form action="/participations" method="POST" enctype="multipart/form-data">-->
+    <!--  <div class="exit">-->
+    <!--    <input type="hidden" name="status" value="2">-->
+    <!--    <input type="submit" value="退会" style="background-color:red;font-size:15px;width:180px;height:60px;" >-->
+    <!--  </div>-->
+    <!--</form>-->
   <div class="gr">
     <div class="yellow">トップ</div>
     <div><a href="community_topics.html">トピックス</a></div>

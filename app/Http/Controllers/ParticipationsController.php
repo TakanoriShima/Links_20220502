@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Community;
 use App\Participation;
 use Illuminate\Http\Request;
 
@@ -27,18 +28,17 @@ class ParticipationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        // dd('create');
+        // クエリパラメータより、参加を希望するコミュニティIDを取得
+        $id = $request->input('id');
+        // コミュニティインスタンスを取得
+        $community = Community::find($id);
         
         //空の申請インスタンス作成
-        $participation=new Participation();
-         //view の呼び出し
+        $participation = new Participation();
         
-        //
-        $community = $participation->communities()->where('orderBy',id)->get();
-        
-        
+        //view の呼び出し
         return view("participations.create",compact('participation','community'));
     }
 
@@ -50,32 +50,18 @@ class ParticipationsController extends Controller
      */
     public function store(Request $request)
     {
+
+        $community_id = $request->input('community_id');
+
+        $participation = new Participation();
         
-        //   dd('community store');
-        // dd($request);
-        // validation        
-        // for image ref) https://qiita.com/maejima_f/items/7691aa9385970ba7e3ed
-        $this->validate($request, [
-            'status' => 'required',
-        ]);
-        
-        
-           // dd('OK');
-        // 入力情報の取得
-        $status = $request->input('status');
-        
-        
-        // 入力情報をもとに新しいインスタンス作成
-        \Auth::user()->participations()->create(['status' => $status]);
-        
-        
-        
-        
-        
-        
-        
+        $participation->community_id = $community_id;
+        $participation->user_id = \Auth::id();
+
+        $participation->save();
+
         // トップページへリダイレクト
-        return redirect('/participations')->with('flash_message', '参加申請を作りました');
+        return redirect('/participations')->with('flash_message', '参加申請しました');
     }
 
     /**

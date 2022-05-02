@@ -24,7 +24,7 @@
   <div class="pobutton">
     @if($community->user_id !== Auth::id() && Auth::user()->is_participate($community->id) === false)
     <div class="sanka">
-      <a href="/participations/create">コミュニティの参加申請のページへ</a>
+      <a href="/participations/create?id={{ $community->id }}">コミュニティの参加申請のページへ</a>
     </div>
   </div>
   @endif
